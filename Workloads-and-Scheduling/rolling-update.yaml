@@ -1,0 +1,6 @@
+How can you Rolling update your application 
+kubectl set image deployment/<YOUR-DEPLOYMENT-NAME-HERE> <YOUR-DEPLOYMENT-NAME-HERE>=<YOUR-NEW-DOCKER-IMAGE-NAME>
+
+
+How can you Roll back 
+kubectl rollout undo deployment/<YOUR-DEPLOYMENT-NAME-HERE>
