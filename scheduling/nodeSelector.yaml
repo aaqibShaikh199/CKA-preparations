@@ -1,0 +1,16 @@
+#How to label a Node
+#kubectl label nodes <your-node-name> <YOUR-KEY>=<YOUR-VALUE> 
+#reference:- https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/ 
+
+
+#NodeSelector YAML file
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+  nodeSelector:
+    key: value
