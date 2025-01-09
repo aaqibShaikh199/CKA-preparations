@@ -1,18 +1,28 @@
 #Reference https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: required
+  name: required-deployment
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: key1
-            operator: In
-            values:
-            - value1
-  containers:
-  - name: with-node-affinity
-    image: nginx
+  replicas: 4 
+  selector:
+    matchLabels:
+      app: required
+  template:
+    metadata:
+      labels:
+        app: required
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: key1
+                operator: In
+                values:
+                - value1
+      containers:
+      - name: with-node-affinity
+        image: nginx
+
