@@ -2,17 +2,26 @@
 #kubectl taint node <NODE-NAMR> <KEY>=<VALUE>:<EFFECT>
 
 #Taint-toleration file 
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: nginx
-  labels:
-    env: test
+  name: taint-and-toleration
 spec:
-  containers:
-  - name: nginx
-    image: nginx
-  tolerations:
-  - key: "KEY
-    effect: "EFFECT"
-    value: "VALUE"
+  replicas: 4
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+        env: test
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+      tolerations:
+      - key: "KEY"
+        effect: "EFFECT"
+        value: "VALUE"
+
