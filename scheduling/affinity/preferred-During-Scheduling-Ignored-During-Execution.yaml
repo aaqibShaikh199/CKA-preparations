@@ -1,19 +1,29 @@
 #Reference:- https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: preferred
+  name: preferred-During-Scheduling-Ignored-During-Execution
 spec:
-  affinity:
-    nodeAffinity:
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1   #This is a mandatory field.
-        preference: #This is a mandatory field.
-          matchExpressions:
-          - key: keyyy
-            operator: In
-            values:
-            - valueee
-  containers:
-  - name: with-node-affinity
-    image: nginx
+  replicas: 4
+  selector:
+    matchLabels:
+      app: preferred
+  template:
+    metadata:
+      labels:
+        app: preferred
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 1   # This is a mandatory field.
+            preference: # This is a mandatory field.
+              matchExpressions:
+              - key: keyyy
+                operator: In
+                values:
+                - valueee
+      containers:
+      - name: with-node-affinity
+        image: nginx
+
