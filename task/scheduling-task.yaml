@@ -1,0 +1,83 @@
+#Q:-I have three nodes (Prod, Dev, and Staging) and three corresponding deployments (Prod, Dev, and Staging)
+#1) Pods from the Prod deployment should only be scheduled on the Prod node.
+#2) Pods from the Staging deployment should only be scheduled on the Staging node.
+#3) Pods from the Dev deployment should be scheduled on both the Staging and Dev nodes.
+
+#solutions
+#Q1) Pods from the Prod deployment should only be scheduled on the Prod node.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: env
+                    operator: In
+                    values:
+                      - prod
+      containers:
+      - name: prod
+        image: nginx
+
+#Q2 Pods from the Staging deployment should only be scheduled on the Staging node.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stag
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: night
+                    operator: In
+                    values:
+                      - task
+      containers:
+        - name: stag
+          image: nginx
+
+
+#3) Pods from the Dev deployment should be scheduled on both the Staging and Dev nodes."
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+      nodeSelector:
+        aaqib: dev
