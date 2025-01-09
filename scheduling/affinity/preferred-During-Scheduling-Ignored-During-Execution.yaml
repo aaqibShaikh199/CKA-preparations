@@ -1,0 +1,19 @@
+#Reference:- https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity
+apiVersion: v1
+kind: Pod
+metadata:
+  name: preferred
+spec:
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1   #This is a mandatory field.
+        preference: #This is a mandatory field.
+          matchExpressions:
+          - key: keyyy
+            operator: In
+            values:
+            - valueee
+  containers:
+  - name: with-node-affinity
+    image: nginx
