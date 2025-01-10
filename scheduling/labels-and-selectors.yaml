@@ -1,0 +1,36 @@
+#Reference:-
+#Replicaset
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+  labels: #Ye replicaSet k labels honge
+    app: guestbook
+    tier: frontend
+spec:
+  replicas: 3
+  selector:
+    matchLabels: #ReplicaSet ko pod se connect hone k liye ye lable ka use krta hai 
+      tier: frontend
+  template:
+    metadata:
+      labels: #ye POD k lable honga && service me yahi label connect honga
+        tier: frontend
+    spec:
+      containers:
+      - name: php-redis
+        image: us-docker.pkg.dev/google-samples/containers/gke/gb-frontend:v5
+
+#Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  type: NodePort
+  selector:
+    tier: frontend #Service ye selector ka Label se match honga
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 30007
