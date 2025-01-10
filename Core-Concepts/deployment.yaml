@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: backend
-  template:
+  template: #POD configuration are start from here
     metadata:
       labels:
         app: backend
