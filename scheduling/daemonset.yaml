@@ -1,0 +1,18 @@
+#reference:- https://spacelift.io/blog/kubernetes-daemonset
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: aaqib-daemonset
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: daemonset-container
+          image: <YOUR-IMAGE-NAME-HERE>
