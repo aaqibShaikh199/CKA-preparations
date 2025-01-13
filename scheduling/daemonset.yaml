@@ -16,3 +16,6 @@ spec:
       containers:
         - name: daemonset-container
           image: <YOUR-IMAGE-NAME-HERE>
+
+#Q:- Why we used Lable here
+#Ans:- Labels and selectors are used in DaemonSet to target specific pods in a cluster. For example, if you want the DaemonSet to manage only pods with a specific label (like app:backend), selectors help achieve this by filtering and applying the DaemonSet only to those pods.
